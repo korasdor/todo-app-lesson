@@ -5,7 +5,7 @@ import (
 	"github.com/korasdor/todo-app/repository"
 )
 
-type Autharization interface {
+type Authorization interface {
 	CreateUser(user models.User) (int, error)
 	GenerateToken(username string, password string) (string, error)
 	ParseToken(token string) (int, error)
@@ -18,13 +18,13 @@ type TodoItem interface {
 }
 
 type Service struct {
-	Autharization
+	Authorization
 	TodoList
 	TodoItem
 }
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
-		Autharization: NewAuthService(repos),
+		Authorization: NewAuthService(repos),
 	}
 }

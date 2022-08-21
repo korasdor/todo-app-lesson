@@ -12,23 +12,27 @@ const (
 	userCtx             = "userId"
 )
 
-func (h *Handler) userIdentify(c *gin.Context) {
-	header := c.GetHeader(authorizationHeader)
-	if header == "" {
-		newErrorResponse(c, http.StatusUnauthorized, "empty auth header")
-		return
+func (h *Handler) userIdentefy() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		header := ctx.GetHeader(authorizationHeader)
+		if header == "" {
+			newErrorResponse(ctx, http.StatusUnauthorized, "empty auth header")
+			return
+		}
+
+		headerParts := strings.Split(header, " ")
+		if len(headerParts) != 2 {
+			newErrorResponse(ctx, http.StatusUnauthorized, "invalid auth header")
+			return
+		}
+
+		userId, err := h.services.Authorization.ParseToken(headerParts[1])
+		if err != nil {
+			newErrorResponse(ctx, http.StatusUnauthorized, err.Error())
+		}
+
+		ctx.Set(userCtx, userId)
+		ctx.Next()
 	}
 
-	headerParts := strings.Split(header, " ")
-	if len(headerParts) != 2 {
-		newErrorResponse(c, http.StatusUnauthorized, "invalid auth header")
-		return
-	}
-
-	userId, err := h.services.Autharization.ParseToken(headerParts[1])
-	if err != nil {
-		newErrorResponse(c, http.StatusUnauthorized, err.Error())
-	}
-
-	c.Set(userCtx, userId)
 }
