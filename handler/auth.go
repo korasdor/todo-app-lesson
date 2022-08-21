@@ -34,13 +34,13 @@ func (h *Handler) signIn(c *gin.Context) {
 		return
 	}
 
-	id, err := h.services.Autharization.GenerateToken(input.Username, input.Password)
+	token, err := h.services.Autharization.GenerateToken(input.Username, input.Password)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	c.JSON(http.StatusOK, map[string]interface{}{
-		"id": id,
+		"token": token,
 	})
 }

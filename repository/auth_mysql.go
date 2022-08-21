@@ -37,5 +37,10 @@ func (r *AuthMysql) CreateUser(user models.User) (int, error) {
 }
 
 func (r *AuthMysql) GetUser(username string, password string) (models.User, error) {
-	return models.User{}, nil
+	var user models.User
+	query := fmt.Sprintf(`SELECT id FROM %s WHERE username="%s" AND password_hash="%s"`, usersTable, username, password)
+
+	err := r.db.Get(&user, query)
+
+	return user, err
 }
