@@ -23,11 +23,12 @@ func main() {
 		logrus.Fatalf("failed to initialize db %s", err.Error())
 	}
 
-	repos := repository.NewRepository(db)
+	repos := repository.∏ry(db)
 	services := service.NewService(repos)
 	handlers := handler.NewHandler(services)
 
 	logrus.Println("Starting run server...")
+	logrus.Println("test")
 
 	srv := new(core.Server)
 	if err := srv.Run(utils.GetEnvVar("PORT"), handlers.InitRoutes()); err != nil {
