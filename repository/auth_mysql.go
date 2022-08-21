@@ -36,6 +36,6 @@ func (r *AuthMysql) CreateUser(user models.User) (int, error) {
 	return int(id), nil
 }
 
-func (r *AuthMysql) CreateUser(user models.User) (int, error) {
-
+func (r *AuthMysql) GetUser(username string, password string) (models.User, error) {
+	return models.User{}, nil
 }

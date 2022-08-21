@@ -25,6 +25,7 @@ func (s *AuthService) CreateUser(user models.User) (int, error) {
 
 func (s *AuthService) GenerateToken(username string, password string) (int, error) {
 	//TODO
+	return 0, nil
 }
 
 func (s *AuthService) generatePasswordHash(password string) string {

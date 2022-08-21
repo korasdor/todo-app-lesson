@@ -34,7 +34,7 @@ func (h *Handler) signIn(c *gin.Context) {
 		return
 	}
 
-	id, err := h.services.Autharization.GenerateTocken(input.Username, input.Password)
+	id, err := h.services.Autharization.GenerateToken(input.Username, input.Password)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

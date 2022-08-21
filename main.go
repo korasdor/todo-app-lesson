@@ -20,7 +20,7 @@ func main() {
 	db, err := repository.NewMysqlDB(utils.GetEnvVar("DB_DATASOURCE_NAME"))
 
 	if err != nil {
-		logrus.Fatalf("failed to initialize db: %s", err.Error())
+		logrus.Fatalf("failed to initialize db %s", err.Error())
 	}
 
 	repos := repository.NewRepository(db)
