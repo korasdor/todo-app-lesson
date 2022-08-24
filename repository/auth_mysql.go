@@ -16,14 +16,9 @@ func NewAuthMysql(db *sqlx.DB) *AuthMysql {
 }
 
 func (r *AuthMysql) CreateUser(user models.User) (int, error) {
-	query := fmt.Sprintf(`INSERT INTO %s (name, username, password_hash) values ("%s", "%s", "%s")`, usersTable, user.Name, user.Username, user.Password)
+	query := fmt.Sprintf(`INSERT INTO %s (name, username, password_hash) values (?, ?, ?)`, usersTable)
 
-	stmt, err := r.db.Prepare(query)
-	if err != nil {
-		return 0, err
-	}
-
-	res, err := stmt.Exec()
+	res, err := r.db.Exec(query, user.Name, user.Username, user.Password)
 	if err != nil {
 		return 0, err
 	}
