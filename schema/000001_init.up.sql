@@ -16,8 +16,11 @@ CREATE TABLE
 CREATE TABLE
     users_lists (
         id serial NOT NULL UNIQUE,
-        user_id INT NOT NULL REFERENCES users (id) on delete CASCADE,
-        list_id INT NOT NULL REFERENCES todo_lists (id) on delete CASCADE
+        user_id BIGINT UNSIGNED NOT NULL,
+        list_id BIGINT UNSIGNED NOT NULL,
+
+        FOREIGN KEY (user_id) REFERENCES users (id) on delete CASCADE,
+        FOREIGN KEY (list_id) REFERENCES todo_lists (id) on delete CASCADE
     );
 
 CREATE TABLE
@@ -31,6 +34,9 @@ CREATE TABLE
 CREATE TABLE
     lists_items (
         id serial NOT NULL UNIQUE,
-        item_id INT NOT NULL REFERENCES todo_items (id) on delete CASCADE,
-        list_id INT NOT NULL REFERENCES todo_lists (id) on delete CASCADE
+        item_id BIGINT UNSIGNED NOT NULL,
+        list_id BIGINT UNSIGNED NOT NULL,
+
+        FOREIGN KEY (item_id) REFERENCES todo_items (id) on delete CASCADE,
+        FOREIGN KEY (list_id) REFERENCES todo_lists (id) on delete CASCADE
     );
